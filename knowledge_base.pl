@@ -59,11 +59,11 @@ solve :-
 	all_different([KnightCounty, GrossCounty, EvoyCounty,
 		AppletonCounty, ParnellCounty]),
 
-	Quads = [[knight, KnightCounty, KnightActivity, KnightClass],
-		 [gross, GrossCounty, GrossActivity, GrossClass],
-		 [evoy, EvoyCounty, EvoyActivity, EvoyClass],
-		 [appleton, AppletonCounty, AppletonActivity, AppletonClass],
-		 [parnell, ParnellCounty, ParnellActivity, ParnellClass]]. %TODO continue rule def with ,s
+	Quadruples = [[knight, KnightCounty, KnightActivity, KnightSubject],
+		      [gross, GrossCounty, GrossActivity, GrossSubject],
+		      [evoy, EvoyCounty, EvoyActivity, EvoySubject],
+		      [appleton, AppletonCounty, AppletonActivity, AppletonSubject],
+		      [parnell, ParnellCounty, ParnellActivity, ParnellSubject]]. %TODO continue rule def with ,s
 
 
 
