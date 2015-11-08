@@ -94,6 +94,7 @@ solve :-
 	( member([evoy, yorkshire, _, history], Quadruples);
 	  member([evoy, cumbria, _, history], Quadruples) ),
 
+
 	% Rule 4. If the woman who is going to Hertfordshire is the English teacher, 
 	% then she is Ms. Appleton; otherwise, she is Ms. Parnell (who is going swimming).
 
@@ -101,8 +102,34 @@ solve :-
 
 	%% FIXME if then else
 	%% ( member([_, hertfordshire, _, english], Quadruples) ->
-	%% 	member([appleton, hertfordshire, _, english], Quadruples);
+	%% 	member([appleton, _, _, _], Quadruples);
 	%% 	member([parnell, _, _, _], Quadruples) ),
+
+	% alternative if-else?
+	( (member([_, hertfordshire, _, english], Quadruples),
+		member([appleton, _, _, _], Quadruples));
+
+	  (\+ member([_, hertfordshire, _, english], Quadruples),
+		member([parnell, _, _, _], Quadruples)) ),
+
+
+	% Rule 5. The person who is going to Yorkshire (who isn’t the PE teacher) 
+	% isn’t the one who is going sightseeing.
+
+	\+ member([_, yorkshire, _, pe], Quadruples),
+	\+ member([_, yorkshire, sightseeing, _], Quadruples),
+
+
+	% Rule 6. Ms. Gross isn’t the woman who going camping.
+
+	\+ member([gross, _, camping, _], Quadruples),
+
+
+	% Rule 7. One woman is going to a nudist colony on her holiday.
+
+	( member([gross, _, nudist, _], Quadruples);
+	  member([appleton, _, nudist, _], Quadruples);
+	  member([parnell, _, nudist, _], Quadruples) ),
 
 
 	tell(knight, KnightCounty, KnightActivity, KnightSubject),
@@ -121,23 +148,9 @@ all_different([_]).
 
 tell(W, X, Y, Z) :- write(W, X, Y, Z), nl.
 
-% member atom template
-member([_, _, _, _], Quadruples)
 
 
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
+%% % member atom template
+%% member([_, _, _, _], Quadruples)
 
 
