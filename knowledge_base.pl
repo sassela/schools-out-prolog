@@ -1,4 +1,6 @@
 % Problem #2: School’s Out!
+% Each teacher of different subjects go on a different activity at a different location.
+
 
 teacher(knight).
 teacher(gross).
@@ -24,6 +26,7 @@ subject(science).
 subject(english).
 subject(history).
 subject(pe).
+
 
 
 solve :-
@@ -59,11 +62,72 @@ solve :-
 	all_different([KnightCounty, GrossCounty, EvoyCounty,
 		AppletonCounty, ParnellCounty]),
 
-	Quadruples = [[knight, KnightCounty, KnightActivity, KnightSubject],
-		      [gross, GrossCounty, GrossActivity, GrossSubject],
-		      [evoy, EvoyCounty, EvoyActivity, EvoySubject],
-		      [appleton, AppletonCounty, AppletonActivity, AppletonSubject],
-		      [parnell, ParnellCounty, ParnellActivity, ParnellSubject]]. %TODO continue rule def with ,s
+
+	Quadruples = [ [knight, KnightCounty, KnightActivity, KnightSubject],
+		      	   [gross, GrossCounty, GrossActivity, GrossSubject],
+		           [evoy, EvoyCounty, EvoyActivity, EvoySubject],
+		           [appleton, AppletonCounty, AppletonActivity, AppletonSubject],
+		           [parnell, ParnellCounty, ParnellActivity, ParnellSubject] ],
+
+
+	% Rule 1: Ms. Gross teaches either maths or science. 
+	% If Ms. Gross is going to a nudist colony, then she is going to Suffolk; 
+	% otherwise she is going to Cornwall.
+
+	( (member([gross, _, _, maths], Quadruples);
+	   member([gross, _, _, science], Quadruples)),
+
+	  (member([gross, suffolk, nudist, _], Quadruples);
+	   member([gross, cornwall, _, _], Quadruples)) ),
+
+
+	% Rule 2. The science teacher (who is going body-boarding) 
+	% is going to travel to Cornwall or Norfolk.
+
+	( member([_, cornwall, bodyboarding, science], Quadruples);
+	  member([_, norfolk, bodyboarding, science], Quadruples) ),
+
+
+	% Rule 3. Mr. McEvoy (who is the history teacher) 
+	% is going to Yorkshire or Cumbria.
+
+	( member([evoy, yorkshire, _, history], Quadruples);
+	  member([evoy, cumbria, _, history], Quadruples) ),
+
+	% Rule 4. If the woman who is going to Hertfordshire is the English teacher, 
+	% then she is Ms. Appleton; otherwise, she is Ms. Parnell (who is going swimming).
+
+	member([parnell, _, swimming, _], Quadruples),
+
+	%% FIXME if then else
+	%% ( member([_, hertfordshire, _, english], Quadruples) ->
+	%% 	member([appleton, hertfordshire, _, english], Quadruples);
+	%% 	member([parnell, _, _, _], Quadruples) ),
+
+
+	tell(knight, KnightCounty, KnightActivity, KnightSubject),
+	tell(gross, GrossCounty, GrossActivity, GrossSubject),
+	tell(evoy, EvoyCounty, EvoyActivity, EvoySubject),
+	tell(appleton, AppletonCounty, AppletonActivity, AppletonSubject),
+	tell(parnell, ParnellCounty, ParnellActivity, ParnellSubject).
+
+
+% Succeeds if all elements of the argument list are bound and different. 
+% Fails if any elements are unbound or equal to some other element.
+
+all_different([H|T]) :- member(H, T), !, fail. 
+all_different([_|T]) :- all_different(T).
+all_different([_]).
+
+tell(W, X, Y, Z) :- write(W, X, Y, Z), nl.
+
+% member atom template
+member([_, _, _, _], Quadruples)
+
+
+	
+	
+
 
 
 
