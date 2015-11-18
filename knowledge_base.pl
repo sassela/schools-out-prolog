@@ -38,14 +38,6 @@ solve :-
 	all_different([KnightActivity, GrossActivity, EvoyActivity,
 		AppletonActivity, ParnellActivity]),
 
-	holiday(KnightHoliday), 
-	holiday(GrossHoliday), 
-	holiday(EvoyHoliday), 
-	holiday(AppletonHoliday), 
-	holiday(ParnellHoliday), 
-	all_different([KnightHoliday, GrossHoliday, EvoyHoliday,
-		AppletonHoliday, ParnellHoliday]),
-
 	subject(KnightSubject), 
 	subject(GrossSubject), 
 	subject(EvoySubject), 
@@ -78,7 +70,8 @@ solve :-
 	   member([gross, _, _, science], Quadruples)),
 
 	  (member([gross, suffolk, nudist, _], Quadruples);
-	   member([gross, cornwall, _, _], Quadruples)) ),
+	   (member([gross, cornwall, _, _], Quadruples),
+	   	\+ member([gross, _, nudist, _], Quadruples))) ),
 
 
 	% Rule 2. The science teacher (who is going body-boarding) 
@@ -100,12 +93,6 @@ solve :-
 
 	member([parnell, _, swimming, _], Quadruples),
 
-	%% FIXME if then else
-	%% ( member([_, hertfordshire, _, english], Quadruples) ->
-	%% 	member([appleton, _, _, _], Quadruples);
-	%% 	member([parnell, _, _, _], Quadruples) ),
-
-	% alternative if-else?
 	( (member([_, hertfordshire, _, english], Quadruples),
 		member([appleton, _, _, _], Quadruples));
 
@@ -146,11 +133,7 @@ all_different([H|T]) :- member(H, T), !, fail.
 all_different([_|T]) :- all_different(T).
 all_different([_]).
 
-tell(W, X, Y, Z) :- write(W, X, Y, Z), nl.
-
-
-
-%% % member atom template
-%% member([_, _, _, _], Quadruples)
+tell(W, X, Y, Z) :- write('Ms / Mr '), write(W), write(', who teaches ' ), write(Z), 
+write(' went '), write(Y), write(' in '), write(X), nl.
 
 
